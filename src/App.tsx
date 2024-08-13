@@ -19,6 +19,7 @@ import { jwtDecode } from 'jwt-decode';
 import { JwtInfoFromDto } from '@/utils/helpers/JwtInfoFromDto.ts';
 import { AuthRequire } from '@/components/hocs/AuthRequire.tsx';
 import { ProfilePage } from '@/pages/ProfilePage/ProfilePage.tsx';
+import { AlertPopup } from '@/components/shared/AlertPopup/AlertPopup.tsx';
 
 function App() {
   const context = useContext(StoreContext);
@@ -39,6 +40,7 @@ function App() {
       <AppShell header={{ height: 70 }}>
         <Header />
       </AppShell>
+      <AlertPopup />
       <Stack mih={em('100vh')} align="stretch" justify="center" gap={0}>
         <Routes>
           <Route path={MAIN} element={<MainPage />} />

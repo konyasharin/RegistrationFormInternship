@@ -1,0 +1,13 @@
+.alert{
+    z-index: 1;
+    font-size: var(--mantine-font-size-lg);
+    transition: 1s opacity;
+}
+
+.alert_active{
+    opacity: 1;
+}
+
+.alert_disabled{
+    opacity: 0;
+}

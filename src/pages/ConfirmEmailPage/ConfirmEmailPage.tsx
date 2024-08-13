@@ -1,14 +1,16 @@
 import { TextInput } from '@mantine/core';
 import { Form } from '@/components/ui/Form/Form.tsx';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { confirmCode } from '@/utils/api/requests/registration/confirmCode.ts';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from '@/shared/constants/routes.ts';
+import { StoreContext } from '@/context/StoreContext.tsx';
 
 export const ConfirmEmailPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const context = useContext(StoreContext);
   const form = useForm({
     initialValues: {
       code: '',
@@ -34,6 +36,11 @@ export const ConfirmEmailPage = () => {
             form.setFieldError('code', 'Неверный код');
           else {
             form.setFieldError('code', '');
+            context?.setAlertPopup({
+              isActive: true,
+              title: 'Подтверждение прошло успешно',
+              text: 'Поздравляем, вы подтвердили адрес электронной почты, теперь осталось только войти в аккаунт',
+            });
             navigate(LOGIN);
           }
         } else {

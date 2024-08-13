@@ -4,13 +4,15 @@ import { CONFIRM_EMAIL, LOGIN } from '@/shared/constants/routes.ts';
 import { useForm } from '@mantine/form';
 import { EMAIL_PATTERN } from '@/shared/constants/patterns.ts';
 import { registration } from '@/utils/api/requests/registration/registration.ts';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Form } from '@/components/ui/Form/Form.tsx';
+import { StoreContext } from '@/context/StoreContext.tsx';
 
 export const RegistrationPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const context = useContext(StoreContext);
   const form = useForm({
     initialValues: {
       email: '',
@@ -49,6 +51,11 @@ export const RegistrationPage = () => {
               setError('Пользователь с таким именем уже существует');
             else {
               setError('');
+              context?.setAlertPopup({
+                isActive: true,
+                title: 'Проверьте электронную почту',
+                text: 'Мы прислали сообщение вам на электронную почту и вы можете либо ввести код из письма в окне ниже, либо перейти по ссылке в письме',
+              });
               navigate(CONFIRM_EMAIL);
             }
           } else setError('Не удалось зарегистрироваться');

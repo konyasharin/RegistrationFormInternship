@@ -12,6 +12,6 @@ export const AuthRequire: FC<AuthRequireProps> = props => {
   const context = useContext(StoreContext);
   useLayoutEffect(() => {
     if (context?.isInitialized && !context?.user) navigate(MAIN);
-  }, [context?.isInitialized]);
+  }, [context?.isInitialized, context?.user]);
   return <>{props.children}</>;
 };
