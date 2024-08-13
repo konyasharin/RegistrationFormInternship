@@ -17,7 +17,7 @@ import { useContext, useLayoutEffect } from 'react';
 import { StoreContext } from '@/context/StoreContext.tsx';
 import { jwtDecode } from 'jwt-decode';
 import { JwtInfoFromDto } from '@/utils/helpers/JwtInfoFromDto.ts';
-import { AuthRequire } from '@/components/hocs/AuthRequire.tsx';
+import { AuthInspector } from '@/components/hocs/AuthInspector.tsx';
 import { ProfilePage } from '@/pages/ProfilePage/ProfilePage.tsx';
 import { AlertPopup } from '@/components/shared/AlertPopup/AlertPopup.tsx';
 
@@ -44,15 +44,36 @@ function App() {
       <Stack mih={em('100vh')} align="stretch" justify="center" gap={0}>
         <Routes>
           <Route path={MAIN} element={<MainPage />} />
-          <Route path={REGISTRATION} element={<RegistrationPage />} />
-          <Route path={LOGIN} element={<LoginPage />} />
-          <Route path={CONFIRM_EMAIL} element={<ConfirmEmailPage />} />
+          <Route
+            path={REGISTRATION}
+            element={
+              <AuthInspector authIsRequired={false}>
+                <RegistrationPage />
+              </AuthInspector>
+            }
+          />
+          <Route
+            path={LOGIN}
+            element={
+              <AuthInspector authIsRequired={false}>
+                <LoginPage />
+              </AuthInspector>
+            }
+          />
+          <Route
+            path={CONFIRM_EMAIL}
+            element={
+              <AuthInspector authIsRequired={false}>
+                <ConfirmEmailPage />
+              </AuthInspector>
+            }
+          />
           <Route
             path={PROFILE}
             element={
-              <AuthRequire>
+              <AuthInspector>
                 <ProfilePage />
-              </AuthRequire>
+              </AuthInspector>
             }
           />
           <Route path={'*'} element={<NotFoundPage />} />

@@ -7,14 +7,19 @@ import { StoreContext } from '@/context/StoreContext.tsx';
 
 export const AlertPopup = () => {
   const context = useContext(StoreContext);
-  const { toggle, active: timerIsActive } = useInterval(() => {
+  const {
+    start,
+    stop,
+    active: timerIsActive,
+  } = useInterval(() => {
     context?.setAlertPopup({
       ...context?.alertPopup,
       isActive: !timerIsActive,
     });
   }, 5000);
   useEffect(() => {
-    toggle();
+    if (context?.alertPopup.isActive) start();
+    else stop();
   }, [context?.alertPopup.isActive]);
   return (
     <Alert

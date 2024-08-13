@@ -11,11 +11,11 @@ export const ProfilePage = () => {
       </Title>
       <Space h={40} />
       <Flex direction={'column'} gap={20}>
-        <Flex gap={10} align={'center'}>
+        <Flex gap={10} align={'baseline'}>
           <Text size={'xl'} fw={700}>
             Электронная почта:
           </Text>
-          <Text size={'lg'}>{context?.user?.email}</Text>
+          <Text size={'md'}>{context?.user?.email}</Text>
         </Flex>
         <Button
           w={'fit-content'}
