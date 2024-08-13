@@ -1,6 +1,6 @@
 import { Anchor, Center, Space, TextInput } from '@mantine/core';
-import { Link } from 'react-router-dom';
-import { REGISTRATION } from '@/shared/constants/routes.ts';
+import { Link, useNavigate } from "react-router-dom";
+import { PROFILE, REGISTRATION } from "@/shared/constants/routes.ts";
 import { Form } from '@/components/ui/Form/Form.tsx';
 import { useForm } from '@mantine/form';
 import { EMAIL_PATTERN } from '@/shared/constants/patterns.ts';
@@ -14,6 +14,7 @@ import { StoreContext } from '@/context/StoreContext.tsx';
 
 export const LoginPage = () => {
   const setJwt = useContext(StoreContext)?.setJwt;
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const form = useForm({
@@ -31,7 +32,6 @@ export const LoginPage = () => {
   });
   return (
     <>
-      <Space h={200} />
       <Form
         title={'Вход'}
         sendButtonText={'Войти'}
@@ -44,6 +44,8 @@ export const LoginPage = () => {
           if (response) {
             if (response.data.auth_token) {
               setJwt?.(loginResponseFromDto(response.data as LoginResponse));
+              setError('');
+              navigate(PROFILE);
             } else if (!response.data.success) {
               setError('Неверный логин или пароль');
             }

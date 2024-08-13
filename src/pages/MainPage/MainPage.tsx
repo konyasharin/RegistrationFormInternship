@@ -1,10 +1,10 @@
-import { Button, em, Stack } from '@mantine/core';
+import { Button, Flex } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { LOGIN, REGISTRATION } from "@/shared/constants/routes.ts";
+import { LOGIN, REGISTRATION } from '@/shared/constants/routes.ts';
 
 export const MainPage = () => {
   return (
-    <Stack mih={em('100vh')} align="stretch" justify="center" gap={30}>
+    <Flex gap={30} direction="column">
       <Button
         variant={'filled'}
         fullWidth
@@ -23,6 +23,6 @@ export const MainPage = () => {
       >
         Вход
       </Button>
-    </Stack>
+    </Flex>
   );
 };

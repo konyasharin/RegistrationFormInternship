@@ -32,7 +32,6 @@ export const RegistrationPage = () => {
   });
   return (
     <>
-      <Space h={200} />
       <Form
         title={'Регистрация'}
         sendButtonText={'Зарегистрироваться'}
