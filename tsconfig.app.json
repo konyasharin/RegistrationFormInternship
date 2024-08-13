@@ -21,13 +21,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
+    "noFallthroughCasesInSwitch": true,
 
-  /* Alias */
-  "baseUrl": ".",
-  "paths": {
-    "@/*": ["src/*"],
+    /* Alias */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    }
   },
 
   "include": ["src"]
