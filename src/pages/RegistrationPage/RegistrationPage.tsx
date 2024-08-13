@@ -1,15 +1,16 @@
-import { Button, Center, Flex, Space, Text, TextInput } from '@mantine/core';
-import { Form } from '@/components/ui/Form/Form.tsx';
-import { Link } from 'react-router-dom';
-import { LOGIN } from '@/shared/constants/routes.ts';
+import { Anchor, Center, Space, TextInput } from '@mantine/core';
+import { Link, useNavigate } from 'react-router-dom';
+import { CONFIRM_EMAIL, LOGIN } from '@/shared/constants/routes.ts';
 import { useForm } from '@mantine/form';
 import { EMAIL_PATTERN } from '@/shared/constants/patterns.ts';
-import { postRegistration } from '@/utils/api/requests/registration';
+import { registration } from '@/utils/api/requests/registration/registration.ts';
 import { useState } from 'react';
+import { Form } from '@/components/ui/Form/Form.tsx';
 
 export const RegistrationPage = () => {
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       email: '',
@@ -34,64 +35,50 @@ export const RegistrationPage = () => {
       <Space h={200} />
       <Form
         title={'Регистрация'}
-        onSubmit={form.onSubmit(async ({ repeatPassword, ...values }) => {
+        sendButtonText={'Зарегистрироваться'}
+        error={error}
+        isLoading={isLoading}
+        onSubmit={form.onSubmit(async values => {
           setIsLoading(true);
-          const response = await postRegistration({
-            repeat_password: repeatPassword,
-            ...values,
-          });
+          const response = await registration(values);
           setIsLoading(false);
           if (response) {
             if (response.data.detail) {
               console.log(response.data.detail);
-              setServerError('Данные введены в неверном формате');
+              setError('Данные введены в неверном формате');
             } else if (!response.data.success)
-              setServerError('Пользователь с таким именем уже существует');
-            else if (response.data.success) setServerError(null);
-          }
-          if (!response) setServerError('Не удалось зарегистрироваться');
+              setError('Пользователь с таким именем уже существует');
+            else {
+              setError('');
+              navigate(CONFIRM_EMAIL);
+            }
+          } else setError('Не удалось зарегистрироваться');
         })}
       >
-        <Flex direction={'column'} gap={10}>
-          <TextInput
-            size={'lg'}
-            placeholder={'Электронная почта'}
-            {...form.getInputProps('email')}
-          />
-          <TextInput
-            size={'lg'}
-            placeholder={'Пароль'}
-            type={'password'}
-            {...form.getInputProps('password')}
-          />
-          <TextInput
-            size={'lg'}
-            placeholder={'Повторите пароль'}
-            type={'password'}
-            {...form.getInputProps('repeatPassword')}
-          />
-        </Flex>
-        <Space h={20} />
-        <Button
-          variant={'filled'}
-          fullWidth
+        <TextInput
           size={'lg'}
-          type={'submit'}
-          loading={isLoading}
-        >
-          Зарегистрироваться
-        </Button>
+          placeholder={'Электронная почта'}
+          {...form.getInputProps('email')}
+        />
+        <TextInput
+          size={'lg'}
+          placeholder={'Пароль'}
+          type={'password'}
+          {...form.getInputProps('password')}
+        />
+        <TextInput
+          size={'lg'}
+          placeholder={'Повторите пароль'}
+          type={'password'}
+          {...form.getInputProps('repeatPassword')}
+        />
       </Form>
-      <Space h={5} />
+      <Space h={20} />
       <Center>
-        <Text component={Link} to={LOGIN} c={'blue'} size={'xl'}>
+        <Anchor component={Link} to={LOGIN} size={'xl'} c={'blue'}>
           Уже есть аккаунт? Войти
-        </Text>
+        </Anchor>
       </Center>
-      <Space h={10} />
-      <Text c={'red'} ta={'center'}>
-        {serverError}
-      </Text>
     </>
   );
 };

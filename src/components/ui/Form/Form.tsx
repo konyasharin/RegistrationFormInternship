@@ -1,22 +1,39 @@
+import {
+  Button,
+  Flex,
+  Paper,
+  PaperProps,
+  PolymorphicComponentProps,
+  Space,
+  Text,
+  Title,
+} from '@mantine/core';
 import { FC, FormHTMLAttributes } from 'react';
-import { Space, Title } from '@mantine/core';
-import styles from './Form.module.css';
-import clsx from 'clsx';
 
-type FormProps = FormHTMLAttributes<HTMLFormElement> & {
-  title?: string;
-};
+type FormProps = FormHTMLAttributes<HTMLFormElement> &
+  Omit<PolymorphicComponentProps<'form', PaperProps>, 'component'> & {
+    title?: string;
+    sendButtonText?: string;
+    error?: string;
+    isLoading?: boolean;
+  };
 
 export const Form: FC<FormProps> = ({
   title,
   children,
-  className,
+  sendButtonText,
+  error,
   onSubmit,
+  p = 'xl',
+  shadow = 'xl',
+  isLoading,
   ...attributes
 }) => {
   return (
-    <form
-      className={clsx(className, styles.form)}
+    <Paper
+      component={'form'}
+      shadow={shadow}
+      p={p}
       onSubmit={e => {
         e.preventDefault();
         onSubmit?.(e);
@@ -25,13 +42,33 @@ export const Form: FC<FormProps> = ({
     >
       {title && (
         <>
-          <Title ta={'center'} order={2} size={'h1'} tt={'uppercase'}>
+          <Title ta={'center'} tt={'uppercase'} order={2} size={'h1'}>
             {title}
           </Title>
           <Space h={20} />
         </>
       )}
-      {children}
-    </form>
+      <Flex direction={'column'} gap={10}>
+        {children}
+      </Flex>
+      <Space h={20} />
+      <Button
+        type={'submit'}
+        loading={isLoading}
+        fullWidth={true}
+        size={'lg'}
+        variant={'filled'}
+      >
+        {sendButtonText ?? 'Отправить'}
+      </Button>
+      {error && (
+        <>
+          <Space h={10} />
+          <Text ta={'center'} c={'red'}>
+            {error}
+          </Text>
+        </>
+      )}
+    </Paper>
   );
 };

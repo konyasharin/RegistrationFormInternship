@@ -1,0 +1,13 @@
+.nav_link{
+    font-size: var(--mantine-font-size-lg);
+}
+
+.nav_link_disabled{
+    color: var(--mantine-color-blue-filled);
+    text-decoration: none;
+}
+
+.nav_link_active{
+    color: var(--mantine-color-blue-7);
+    text-decoration: underline;
+}

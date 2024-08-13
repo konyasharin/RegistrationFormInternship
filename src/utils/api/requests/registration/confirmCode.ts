@@ -1,16 +1,15 @@
-import { RegistrationRequest } from '@/shared/types/RegistrationRequest.ts';
 import { api } from '@/utils/api/instance.ts';
-import { SuccessResponse } from '@/shared/types/SuccessResponse.ts';
 import axios, { AxiosResponse } from 'axios';
+import { SuccessResponse } from '@/shared/types/SuccessResponse.ts';
 import { ValidationErrorResponse } from '@/shared/types/ValidationErrorResponse.ts';
 
-export const postRegistration = async (
-  data: RegistrationRequest,
+export const confirmCode = async (
+  confirmationCode: string,
 ): Promise<
   AxiosResponse<Partial<SuccessResponse & ValidationErrorResponse>> | undefined
 > => {
   try {
-    return await api.post<SuccessResponse>('/registration/', data);
+    return await api.patch(`/registration/${confirmationCode}`);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return error.response;

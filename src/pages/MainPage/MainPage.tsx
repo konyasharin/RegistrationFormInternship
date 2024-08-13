@@ -1,6 +1,6 @@
 import { Button, em, Stack } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { REGISTRATION } from '@/shared/constants/routes.ts';
+import { LOGIN, REGISTRATION } from "@/shared/constants/routes.ts";
 
 export const MainPage = () => {
   return (
@@ -19,7 +19,7 @@ export const MainPage = () => {
         fullWidth
         component={Link}
         size={'xl'}
-        to={REGISTRATION}
+        to={LOGIN}
       >
         Вход
       </Button>
