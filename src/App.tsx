@@ -25,7 +25,7 @@ function App() {
   const context = useContext(StoreContext);
   /*
    * useLayoutEffect за место useEffect чтобы не дергался интерфейс,
-   * который зависит от hoc компонента AuthRequire
+   * который зависит от hoc компонента AuthInspector
    * (в нем тоже используется useLayoutEffect)
    */
   useLayoutEffect(() => {
