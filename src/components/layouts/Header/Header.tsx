@@ -1,6 +1,6 @@
 import { AppShell, Container, em, Group } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
-import { MAIN, PROFILE, REGISTRATION } from "@/shared/constants/routes.ts";
+import { MAIN, PROFILE, REGISTRATION } from '@/shared/constants/routes.ts';
 import styles from './Header.module.css';
 import clsx from 'clsx';
 import { useContext } from 'react';

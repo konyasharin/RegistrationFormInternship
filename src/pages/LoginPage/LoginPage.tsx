@@ -1,6 +1,6 @@
 import { Anchor, Center, Space, TextInput } from '@mantine/core';
-import { Link, useNavigate } from "react-router-dom";
-import { PROFILE, REGISTRATION } from "@/shared/constants/routes.ts";
+import { Link, useNavigate } from 'react-router-dom';
+import { PROFILE, REGISTRATION } from '@/shared/constants/routes.ts';
 import { Form } from '@/components/ui/Form/Form.tsx';
 import { useForm } from '@mantine/form';
 import { EMAIL_PATTERN } from '@/shared/constants/patterns.ts';
